@@ -1,0 +1,19 @@
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { UsersService } from '../service/users.service';
+import { User } from 'src/models/user/user.entity';
+import { Repository } from 'typeorm';
+import { UserInterface } from 'src/interfaces/user.interface';
+
+@Controller('users')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get()
+  getUsers(): Promise<User[] | null> {
+    return this.usersService.findAll();
+  }
+  @Post()
+  createUser(@Body() data: UserInterface): Promise<User | null> {
+    return this.usersService.create(data);
+  }
+}
