@@ -36,8 +36,7 @@ export class FirebaseAuthStrategy extends PassportStrategy(
       throw new UnauthorizedException('User not found');
     }
 
-    let user: any = await this.userService.findOneByUid(firebaseUser.uid);
-    console.log('here', user);
+    let user: any = await this.userService.findOneByUid(firebaseUser.uid); 
     if (!user) user = await this.userService.create(firebaseUser);
 
     return user;

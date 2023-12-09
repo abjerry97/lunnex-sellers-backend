@@ -41,8 +41,9 @@ export class StoresService {
       const store = await this.storesRepository.findOneBy({
         user: { id: +userId },
       });
+      console.log(store)
       if (!store) {
-        [];
+       return null;
       }
       return store;
     } catch (err) {

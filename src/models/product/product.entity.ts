@@ -15,37 +15,38 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: "" })
+  @Column({ default: '' })
   name?: string;
 
   // @Column({ default: null })
-  // @ManyToOne(() => Store, (store) => store.products) 
+  // @ManyToOne(() => Store, (store) => store.products)
   // store?: number;
 
-  @Column({ default: "" })
+  @Column({ default: '' })
   image?: string;
 
-  @Column({ default:0 })
-  qty?: number; 
+  @Column({ default: 0 })
+  qty?: number;
 
-  @Column({ default:0 })
+  @Column({ default: 0 })
   status?: number;
 
-  @Column({ default: "" })
+  @Column({ default: '' })
   description?: string;
 
-  @Column({ default: "0" })
+  @Column({ default: '0' })
   rating?: string;
 
   // @Column()
   // reviews: string;
   @Column({ default: 0 })
   sold?: number;
+
   @JoinColumn()
   @ManyToOne(() => Store, (store) => store.products)
   store?: Store;
 
-  @Column({ default: "" })
+  @Column({ default: '' })
   sku?: string;
 
   // @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
@@ -55,7 +56,7 @@ export class Product {
   // @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
   @Column({ default: null })
   deletedAt?: Date;
- 
+
   @OneToOne(() => ProductPrice, (price) => price.product)
-  price?: ProductPrice; 
+  price?: ProductPrice;
 }

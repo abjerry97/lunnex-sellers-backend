@@ -33,8 +33,7 @@ export class ProductsService {
         },
         relations: ['price'],
       });
-      if (!products || products?.length == 0) return null;
-      console.log(products)
+      if (!products || products?.length == 0) return null;  
       return products;
     } catch (error) {
       console.log(error);
@@ -49,12 +48,11 @@ export class ProductsService {
     return this.productsRepository.findOneBy({ sku });
   }
   async create(data: CreateProductInterface, id: number) {
-    try {
+    // try {
       let store = await this.storesRepository.findOne({
         where: { user: { id } },
         relations: ['products'],
-      });
-  
+      }); 
       if (!store)
         throw new HttpException(
           { message: 'Store not found, or already deleted' },
@@ -74,13 +72,13 @@ export class ProductsService {
       store?.products.push(newProduct);
       await this.storesRepository.save(store as Store);
       return newProduct;
-    } catch (error) {
-      console.log(error)
-      throw new HttpException(
-        { message: 'Something Went Wrong' },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    // } catch (error) {
+    //   console.log(error)
+    //   throw new HttpException(
+    //     { message: 'Something Went Wrong' },
+    //     HttpStatus.INTERNAL_SERVER_ERROR,
+    //   );
+    // }
   
   }
   async remove(id: number): Promise<void> {
