@@ -4,6 +4,8 @@ import {
   OneToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
+  JoinColumn,
+  OneToOne,
 } from 'typeorm';
 import { ProductPrice } from '../productPrice/productPrice.entity';
 import { Store } from '../store/store.entity';
@@ -24,7 +26,10 @@ export class Product {
   image?: string;
 
   @Column({ default:0 })
-  qty?: number;
+  qty?: number; 
+
+  @Column({ default:0 })
+  status?: number;
 
   @Column({ default: "" })
   description?: string;
@@ -34,21 +39,23 @@ export class Product {
 
   // @Column()
   // reviews: string;
-  @Column({ default: "" })
-  sold?: string;
-
+  @Column({ default: 0 })
+  sold?: number;
+  @JoinColumn()
   @ManyToOne(() => Store, (store) => store.products)
   store?: Store;
 
   @Column({ default: "" })
   sku?: string;
 
-  @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
+  // @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
+  @Column({ default: null })
   createdAt?: Date;
 
-  @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
+  // @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
+  @Column({ default: null })
   deletedAt?: Date;
-
-  @OneToMany((type) => ProductPrice, (price) => price.productId)
-  products?: ProductPrice[];
+ 
+  @OneToOne(() => ProductPrice, (price) => price.product)
+  price?: ProductPrice; 
 }

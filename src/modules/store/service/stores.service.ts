@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { StoreInterface } from 'src/interfaces/store.interface';
-import { Product } from 'src/models/product/product.entity';
 import { Store } from 'src/models/store/store.entity';
 import { User } from 'src/models/user/user.entity';
 import { Repository } from 'typeorm';
@@ -22,9 +21,50 @@ export class StoresService {
   findOne(id: number): Promise<Store | null> {
     return this.storesRepository.findOneBy({ id });
   }
-  async create(data: StoreInterface) {
+
+  async findOneByUserId(userId: number): Promise<Store | null> {
+    const store = await this.storesRepository.findOneBy({
+      user: { id: +userId },
+    });
+    console.log(store);
+    if (!store) {
+      throw new HttpException(
+        { message: 'Store not found' },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return store;
+  }
+
+  async checkUserStorebyUserId(userId: number): Promise<Store | null> {
+    try {
+      const store = await this.storesRepository.findOneBy({
+        user: { id: +userId },
+      });
+      if (!store) {
+        [];
+      }
+      return store;
+    } catch (err) {
+      throw new HttpException(
+        { message: 'Internal Error' },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async create(data: StoreInterface, id: number) {
+    let store = await this.storesRepository.findOneBy({
+      user: { id: id },
+    });
+    console.log("store",store,id)
+    if (store)
+      throw new HttpException(
+        { message: 'Store is Dupllicated' },
+        HttpStatus.NOT_FOUND,
+      );
     let user = await this.usersRepository.findOne({
-      where: { id: 1 },
+      where: { id: id },
       relations: ['stores'],
     });
     if (!user)
@@ -32,7 +72,8 @@ export class StoresService {
         { message: 'User not found, or already deleted' },
         HttpStatus.NOT_FOUND,
       );
-    let store = new Store();
+    console.log(user);
+    store = new Store();
     store = {
       ...data,
       createdAt: new Date(),

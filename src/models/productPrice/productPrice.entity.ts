@@ -1,48 +1,46 @@
-
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Product } from '../product/product.entity';
 
 @Entity()
-export class ProductPrice{
+export class ProductPrice {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  productId: number;
+  // @Column({ default: "" })
+  @JoinColumn()
+  @OneToOne(() => Product, (product) => product.price)
+  product?: Product;
 
   @Column({ default: 10 })
   status?: number;
 
-  @Column({ default: "" })
-  rawPrice: string;
+  @Column({ default: '' })
+  rawPrice?: string;
 
-  @Column({ default: "" })
-  price: string;
+  @Column({ default: '' })
+  price?: string;
 
-  @Column({ default: "" })
+  @Column({ default: '' })
   priceDollar?: string;
 
-  @Column({ default: "" })
+  @Column({ default: '' })
   taxDollar?: string;
 
+  @Column({ default: '' })
+  oldPrice?: string;
 
-  @Column({ default: "" })
-  oldPrice?: string; 
-   
-  @Column({ default: "" })
+  @Column({ default: '' })
   oldPriceDollar?: string;
-  
-  @Column({ default: "" })
+
+  @Column({ default: '' })
   discount?: string;
-   
+
   @Column({ default: true })
   isActive?: boolean;
-  
-  @Column({default:null})
+
+  @Column({ default: null })
   createdAt?: Date;
-  
-  @Column({default:null})
+
+  @Column({ default: null })
   deletedAt?: Date;
 }
-
-
- 
