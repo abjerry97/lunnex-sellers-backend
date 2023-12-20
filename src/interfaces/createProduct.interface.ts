@@ -7,8 +7,7 @@ export class CreateProductInterface {
   id: number;
 
   @IsNotEmpty()
-  @IsString()
-  @IsAlpha()
+  @IsString() 
   @MinLength(5)
   name: string;
   image?: string;
@@ -17,8 +16,7 @@ export class CreateProductInterface {
   @Min(0)
   qty: number;
   @IsNotEmpty()
-  @IsString()
-  @Min(0)
+  @IsString() 
   price: string;
   @IsNotEmpty()
   @IsString()
