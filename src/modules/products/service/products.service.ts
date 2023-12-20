@@ -55,7 +55,7 @@ export class ProductsService {
       }); 
       if (!store)
         throw new HttpException(
-          { message: 'Store not found, or already deleted' },
+          { message: 'Store not found, or not yet created' },
           HttpStatus.NOT_FOUND,
         );
       let product = new Product();
