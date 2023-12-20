@@ -64,7 +64,7 @@ export class ProductsService {
       product = {
         ...data,
         createdAt: new Date(),
-      } as Product;
+      } as unknown as Product;
    
       await this.productsPriceRepository.save(productPrice);
       product.price = productPrice
