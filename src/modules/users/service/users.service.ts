@@ -31,7 +31,7 @@ export class UsersService {
     let user = new User();
     user.uid = data.uid;
     user.email = data.email;
-    user.name = data.name;
+    user.name = data?.name || "";
     user.stores = [];
     return await this.usersRepository.save(user);
   }
