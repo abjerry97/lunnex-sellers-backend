@@ -6,13 +6,9 @@ import {
   Param,
   UseGuards,
   Req,
-} from '@nestjs/common';
-import { resolve } from 'path';
-import { Store } from 'src/models/store/store.entity';
-import { StoreInterface } from 'src/interfaces/store.interface';
+} from '@nestjs/common'; 
 import { ProductsService } from '../service/products.service';
-import { Product } from 'src/models/product/product.entity';
-import { ProductInterface } from 'src/interfaces/product.interface';
+import { Product } from 'src/models/product/product.entity'; 
 import { FirebaseAuthGuard } from 'src/modules/auth/guards/firebase-auth.guard';
 import { CreateProductInterface } from 'src/interfaces/createProduct.interface';
 

@@ -1,7 +1,5 @@
-import { Injectable, NestMiddleware, RequestMethod } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
-import { RouteInfo } from '@nestjs/common/interfaces';
-import { request } from 'http';
+import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express'; 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {

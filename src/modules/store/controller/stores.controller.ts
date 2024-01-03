@@ -1,13 +1,11 @@
 import {
   Body,
   Controller,
-  Get,
-  Param,
+  Get, 
   Post,
   Req,
   UseGuards,
-} from '@nestjs/common';
-import { resolve } from 'path';
+} from '@nestjs/common'; 
 import { StoresService } from '../service/stores.service';
 import { Store } from 'src/models/store/store.entity';
 import { StoreInterface } from 'src/interfaces/store.interface';

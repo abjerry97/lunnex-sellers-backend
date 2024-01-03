@@ -1,6 +1,4 @@
-import { IsAlpha, isEmail, IsNotEmpty, IsNumber, IsString, isString, Min, MinLength } from "class-validator";
-import { ProductPricesInterface } from "./productPrices.interface";
-import { StoreInterface } from "./store.interface";
+import { IsNotEmpty, IsNumber, IsString, isString, Min, MinLength } from "class-validator"; 
 
 export class CreateProductInterface {
 

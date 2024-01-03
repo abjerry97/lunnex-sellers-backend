@@ -1,8 +1,7 @@
 import { PassportStrategy } from '@nestjs/passport';
 import {
   Inject,
-  Injectable,
-  NotFoundException,
+  Injectable, 
   UnauthorizedException,
 } from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-firebase-jwt';
