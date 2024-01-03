@@ -1,50 +1,91 @@
 name: CI/CD for NestJS
 
 on:
- push:
+  push:
     branches:
       - main
       - dev
       - staging
- pull_request:
+  pull_request:
     branches:
       - main
       - dev
       - staging
 
 jobs:
- lint:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
-        - uses: actions/checkout@v3
-        - name: Install dependencies
-          run: npm install
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
 
-        - name: Lint
-          run: npm run lint
- 
+      - name: Lint
+        run: npm run lint
 
- build:
+  build:
     runs-on: ubuntu-latest
-
 
     strategy:
-        matrix:
-            node-version: [16.x, 18.x]
+      matrix:
+        node-version: [16.x, 18.x]
 
     steps:
-        - uses: actions/checkout@v3
-        - name: Use Node.js ${{matrix.node-version}}
-          uses: actions/setup-node@v3
-          with:
-            node-version: ${{matrix.node-version}}
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{matrix.node-version}}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
 
+      - name: Install dependencies
+        run: npm install
 
-        - name: Install dependencies
-          run: npm install
+      - name: Build
+        run: npm run build --if-present
 
-        - name: Build
-          run: npm run build --if-present
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+    steps:
+      - name: Slack Notification
+        uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: '#just-a-test'
+          message: Starting Deployment...
+        if: always()
 
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Checking Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - uses: actions/download-artifact@master
+        with:
+          name: artifacts
+
+      - name: Deploy to Sandbox
+        run: |
+          artifactName=$(ls *.jar | head -1)
+          mvn deploy -DmuleDeploy \
+           -Dmule.artifact=$artifactName \
+           -s .maven/settings.xml \
+           -DskipTests
+
+      - name: Slack Notification
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          channel: '#just-a-test'
+          message: Deployed {{ env.GITHUB_REF_NAME }} branch Successfully
+        if: always()
