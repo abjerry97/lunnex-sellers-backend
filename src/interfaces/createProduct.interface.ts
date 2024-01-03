@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString, isString, Min, MinLength } from "class-validator"; 
+import { IsNotEmpty, IsNumber, IsString, Min, MinLength } from "class-validator"; 
 
 export class CreateProductInterface {
 
