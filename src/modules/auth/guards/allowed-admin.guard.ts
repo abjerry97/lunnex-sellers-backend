@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common"; 
 import { FirebaseAuthGuard } from "./firebase-auth.guard";
-import { RolesType } from "src/interfaces/user-role.interface";
+import { RolesType } from "../../../interfaces/user-role.interface";
 
 @Injectable()
 export class AllowedAdminGuard implements CanActivate {

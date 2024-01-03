@@ -1,5 +1,5 @@
 import {  Controller, Get } from '@nestjs/common';
-import { CreateProductInterface } from 'src/interfaces/createProduct.interface';
+import { CreateProductInterface } from '../../interfaces/createProduct.interface';
 import { AppService } from './app.service';
 
 @Controller()

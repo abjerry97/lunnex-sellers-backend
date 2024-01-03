@@ -8,9 +8,9 @@ import {
   Req,
 } from '@nestjs/common'; 
 import { ProductsService } from '../service/products.service';
-import { Product } from 'src/models/product/product.entity'; 
-import { FirebaseAuthGuard } from 'src/modules/auth/guards/firebase-auth.guard';
-import { CreateProductInterface } from 'src/interfaces/createProduct.interface';
+import { Product } from '../../../models/product/product.entity'; 
+import { FirebaseAuthGuard } from '../../../modules/auth/guards/firebase-auth.guard';
+import { CreateProductInterface } from '../../../interfaces/createProduct.interface';
 
 @Controller('products')
 export class ProductsController {

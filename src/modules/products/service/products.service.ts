@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'; 
-import { Product } from 'src/models/product/product.entity';
-import { Store } from 'src/models/store/store.entity';
+import { Product } from '../../../models/product/product.entity';
+import { Store } from '../../../models/store/store.entity';
 import { Repository } from 'typeorm';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { HttpStatus } from '@nestjs/common'; 
-import { CreateProductInterface } from 'src/interfaces/createProduct.interface';
-import { ProductPrice } from 'src/models/productPrice/productPrice.entity';
+import { CreateProductInterface } from '../../../interfaces/createProduct.interface';
+import { ProductPrice } from '../../../models/productPrice/productPrice.entity';
 
 @Injectable()
 export class ProductsService {

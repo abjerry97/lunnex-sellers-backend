@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-firebase-jwt';
 import { FirebaseService } from '../services/firebase.service';
-import { UsersService } from 'src/modules/users/service/users.service';
+import { UsersService } from '../../../modules/users/service/users.service';
 
 @Injectable()
 export class FirebaseAuthStrategy extends PassportStrategy(

@@ -7,9 +7,9 @@ import {
   UseGuards,
 } from '@nestjs/common'; 
 import { StoresService } from '../service/stores.service';
-import { Store } from 'src/models/store/store.entity';
-import { StoreInterface } from 'src/interfaces/store.interface';
-import { FirebaseAuthGuard } from 'src/modules/auth/guards/firebase-auth.guard';
+import { Store } from '../../../models/store/store.entity';
+import { StoreInterface } from '../../../interfaces/store.interface'
+import { FirebaseAuthGuard } from '../../auth/guards/firebase-auth.guard';
 
 @Controller('stores')
 export class StoresController {

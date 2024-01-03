@@ -4,9 +4,9 @@ import { FirebaseAuthStrategy } from '../strategies/firebase-auth.strategy';
 import { FirebaseService } from '../services/firebase.service';
 import { FirebaseAuthGuard } from '../guards/firebase-auth.guard';
 import { TypeOrmModule } from '@nestjs/typeorm'; 
-import { User } from 'src/models/user/user.entity';
-import { UsersModule } from 'src/modules/users/module/users.module';
-import { UsersService } from 'src/modules/users/service/users.service';
+import { User } from '../../../models/user/user.entity';
+import { UsersModule } from '../../../modules/users/module/users.module';
+import { UsersService } from '../../../modules/users/service/users.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),

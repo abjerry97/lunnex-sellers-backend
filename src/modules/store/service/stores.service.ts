@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { StoreInterface } from 'src/interfaces/store.interface';
-import { Store } from 'src/models/store/store.entity';
-import { User } from 'src/models/user/user.entity';
+import { StoreInterface } from '../../../interfaces/store.interface';
+import { Store } from '../../../models/store/store.entity';
+import { User } from '../../../models/user/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
