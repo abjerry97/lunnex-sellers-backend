@@ -46,45 +46,20 @@ jobs:
 
       - name: Slack Notification
         uses: act10ns/slack@v1
-        with: 
-              status: starting
-              channel: '#just-a-test'
-              message: Starting Build and Deploy...
+        with:
+          status: starting
+          channel: '#just-a-test'
+          message: Starting Build and Deploy...
         if: always()
-            
-      - name: Checkout repository
-        uses: actions/checkout@v2
-            
-      - name: Checking Cache
-        uses: actions/cache@v1
-        with:
-              path: ~/.m2/repository
-              key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-              restore-keys: |
-                ${{ runner.os }}-maven-         
-               
-            
-      - name: Stamp artifact file name with commit hash
-        run: |
-              artifactName1=$(ls target/*.jar | head -1)
-              commitHash=$(git rev-parse --short "$GITHUB_SHA")
-              artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
-              mv $artifactName1 $artifactName2
-          
-      - name: Upload artifact 
-        uses: actions/upload-artifact@master
-        with:
-                name: artifacts
-                path: target/*.jar      
-            
+
       - name: Slack Notification
         uses: act10ns/slack@v1
-        with: 
-              status: ${{ job.status }}
-              channel: '#just-a-test'
-              message: Build {{ env.GITHUB_REF_NAME }} branch Successfully
+        with:
+          status: ${{ job.status }}
+          channel: '#just-a-test'
+          message: Build {{ env.GITHUB_REF_NAME }} branch Successfully
         if: always()
-  
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -102,26 +77,6 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Checking Cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - uses: actions/download-artifact@master
-        with:
-          name: artifacts
-
-      - name: Deploy to Sandbox
-        run: |
-          artifactName=$(ls *.jar | head -1)
-          mvn deploy -DmuleDeploy \
-           -Dmule.artifact=$artifactName \
-           -s .maven/settings.xml \
-           -DskipTests
 
       - name: Slack Notification
         uses: act10ns/slack@v1
