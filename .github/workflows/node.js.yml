@@ -44,6 +44,12 @@ jobs:
       - name: Build
         run: npm run build --if-present
 
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifacts
+          path: path/to/artifacts
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -70,13 +76,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - uses: actions/download-artifact@master
+      - uses: actions/download-artifact@v2
         with:
           name: artifacts
 
       - name: Deploy to Sandbox
         run: |
-          artifactName=$(ls *.jar | head -1)
+          artifactName=$(ls artifacts/*.jar | head -1)
           mvn deploy -DmuleDeploy \
            -Dmule.artifact=$artifactName \
            -s .maven/settings.xml \
@@ -87,5 +93,8 @@ jobs:
         with:
           status: ${{ job.status }}
           channel: '#just-a-test'
-          message: Deployed {{ env.GITHUB_REF_NAME }} branch Successfully
+          message: Deployed ${{ github.ref }} branch Successfully
         if: always()
+
+      - name: Clean Up Artifacts
+        run: rm -rf artifacts
