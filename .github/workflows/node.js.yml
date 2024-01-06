@@ -67,5 +67,5 @@ jobs:
         with:
           status: ${{ job.status }}
           channel: '#just-a-test'
-          message: Deployed {{ env.GITHUB_REF_NAME }} branch /n  status':'${{job.status}}
+          message: Deployed {{ env.GITHUB_REF_NAME }} branch status:${{job.status}}
         if: always()
