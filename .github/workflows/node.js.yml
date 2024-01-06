@@ -32,16 +32,6 @@ jobs:
         node-version: [16.x, 18.x]
 
     steps:
-      
-
-      - name: Slack Notification
-        uses: act10ns/slack@v1
-        with:
-          status: starting
-          channel: '#just-a-test'
-          message: Starting Build and Deploy...
-        if: always()
-        
       - uses: actions/checkout@v3
       - name: Use Node.js ${{matrix.node-version}}
         uses: actions/setup-node@v3
@@ -53,14 +43,6 @@ jobs:
 
       - name: Build
         run: npm run build --if-present
-
-      - name: Slack Notification
-        uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          channel: '#just-a-test'
-          message: Build {{ env.GITHUB_REF_NAME }} branch Successfully
-        if: always()
 
   deploy:
     needs: build
