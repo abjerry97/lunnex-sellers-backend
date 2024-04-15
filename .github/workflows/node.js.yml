@@ -24,6 +24,12 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+              token: ${{ secrets.CODECOV_TOKEN }}
+              slug: abjerry97/lunnex-sellers-backend
+
   build:
     runs-on: ubuntu-latest
 
