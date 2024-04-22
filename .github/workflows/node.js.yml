@@ -22,8 +22,32 @@ jobs:
         run: npm install
 
       - name: Lint
-        run: npm run lint
-
+        run: npm run lint     
+    
+  coverage:
+    runs-on: ubuntu-latest
+        
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Coverage
+        run: npm run test:cov     
+              
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+           token: ${{ secrets.CODECOV_TOKEN }}
+           slug: WorldEngines/system-service
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          flags: smart-tests
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        
   build:
     runs-on: ubuntu-latest
 
@@ -55,7 +79,7 @@ jobs:
         uses: act10ns/slack@v1
         with:
           status: starting
-          channel: '#just-a-test'
+          channel: '#github-notifications'
           message: Starting Deployment...
         if: always()
 
@@ -66,6 +90,6 @@ jobs:
         uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
-          channel: '#just-a-test'
-          message: Deployed {{ env.GITHUB_REF_NAME }} branch status:${{job.status}}
+          channel: '#github-notifications'
+          message: Deployed {{ env.GITHUB_REF_NAME }} branch status :${{job.status}}
         if: always()
